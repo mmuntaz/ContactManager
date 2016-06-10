@@ -1,0 +1,122 @@
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>Dashboard</h1>
+      <h4>You have <%= @contacts.count %> Contacts and <%= @interacts.count %> Interactions</h4>
+      <p>Here is your dashboard. You can see your recently added contacts and recent interactions below. Click on titles to see more details. </p>
+      <p>Checkout more link on the sidebar
+      </p>
+      <a href="/contacts/new" class="btn btn-primary" id="menu-toggle">Add Contacts</a>
+    </div>
+  </div>
+  <hr>
+</div>
+<!-- tasks -->
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Industries & Relationships</h3>
+      </div>
+      <div class="panel-body">
+        <h4>Your network distribution by Industry</h4>
+
+        <%= pie_chart @contacts.group(:cindustry).count %>
+
+        <h4>Your network distribution by Relatonships</h4>
+        <%= pie_chart @contacts.group(:crelation).count %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Contacts -->
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Recent Contacts</h3>
+      </div>
+      <div class="panel-body">
+        <% con = @contacts.order("updated_at").last(5) %>
+
+        <% con.each do |contact| %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a href="/contacts/<%= contact.id %>">
+              <%= contact.cfname %> <%= contact.clname %>
+            </a>
+          <div class="navbar-right">
+            <%= contact.interacts.count %>
+            <i class="fa fa-coffee" aria-hidden="true">&nbsp;
+            </i>
+          </div>
+        </div>
+        <div class="panel-body">
+          <!-- <tr> -->
+          <span><%= contact.caddress %></span>
+          <span><%= contact.cphone %></span>
+          <span><%= contact.cemail %></span>
+          <p>
+            <%= contact.created_at.strftime("%b %d, %Y") %>
+          </p>
+          <!-- </tr> -->
+          <div class="btn-group navbar-right">
+            <a href="/contacts/<%= contact.id %>/edit" class="btn btn-default btn-sm">
+              <i class="fa fa-edit fa-fw"></i>
+            </a>
+            <a href="/delete_contact/<%= contact.id %>" class="btn btn-default btn-sm" rel="nofollow">
+              <i class="fa fa-trash-o fa-fw"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Recent Interactions</h3>
+    </div>
+    <div class="panel-body">
+      <% inter = @interacts.order("updated_at").last(5)  %>
+      <% inter.each do |interact| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <a href="/interacts/<%= interact.id %>">
+            <%= interact.ititle %></a>
+          </h3>
+          </div>
+          <div class="panel-body">
+            <tr>
+              <td><%= interact.ibody %></td><hr>
+              <td><%= interact.idate.strftime("%b %d, %Y") %></td>
+
+              <a href="/contacts/<%= interact.contact.id %>">
+              <%= interact.contact.cfname %>
+              <%= interact.contact.clname %></a>
+            </tr>
+            <div class="btn-group navbar-right">
+              <a href="/interacts/<%= interact.id %>/edit" class="btn btn-default btn-sm">
+                <i class="fa fa-edit fa-fw"></i>
+              </a>
+              <a href="/delete_interact/<%= interact.id %>" class="btn btn-default btn-sm" rel="nofollow">
+                <i class="fa fa-trash-o fa-fw"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function () {
+  $('#datetimepicker1').datetimepicker();
+});
+</script>

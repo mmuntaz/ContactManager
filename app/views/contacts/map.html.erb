@@ -1,0 +1,48 @@
+<h3>Locations</h3>
+<hr>
+<style>
+#map {
+  width: 900px;
+  height: 700px;
+}
+</style>
+
+<div id="map"></div>
+<script>
+function initMap() {
+  // initiate a new map
+  var mapDiv = document.getElementById('map');
+  var map = new google.maps.Map(mapDiv);
+  // An empty bounds variable for seeting automatic zoom level (bounds of map)
+  var bounds = new google.maps.LatLngBounds();
+  <%  @contacts.each do |contact|   %>
+  // Make info window for this place
+  var infowindow_<%= contact.id %> = new google.maps.InfoWindow({
+    content: "<b><%= contact.cfname %></b>"  +
+    "<li><%= contact.caddress %> </li>"
+  });
+  // Make marker for this place
+
+  var marker_<%= contact.id %> = new google.maps.Marker({
+    position: {lat: <%= contact.lat %>, lng: <%= contact.lng %>},
+    map: map,
+    title: "<%= contact.cfname %>",
+    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+  });
+  // Click to show info window
+  marker_<%= contact.id %>.addListener('click', function() {
+    infowindow_<%= contact.id %>.open(map, marker_<%= contact.id %>);
+  });
+  // Rightclick to edit place
+  marker_<%= contact.id %>.addListener('rightclick', function() {
+    window.location.href = ''
+  });
+  // Add this marker in map bounds
+  bounds.extend(new google.maps.LatLng(<%= contact.lat %>, <%= contact.lng %>));
+  <% end %>
+  // Size map to fit bounds
+  map.fitBounds(bounds);
+};
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+async defer></script>

@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @interact.errors.any? %>
+  <% @interact.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Interaction</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_interact" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for ititle -->
+      <div class="form-group">
+        <label for="ititle" class="control-label">
+          Title
+        </label>
+
+        <input type="text" id="ititle" name="ititle" placeholder="title" class="form-control" value="<%= @interact.ititle %>">
+      </div>
+
+      <!-- Label and input for ibody -->
+      <div class="form-group">
+        <label for="ibody" class="control-label">
+          Body
+        </label>
+
+        <input type="text" id="ibody" name="ibody" placeholder="body" class="form-control" value="<%= @interact.ibody %>">
+      </div>
+
+      <!-- Label and input for idate -->
+      <div class="form-group">
+        <label for="idate" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="idate" name="idate" placeholder="date" class="form-control" value="<%= @interact.idate %>">
+      </div>
+
+      <!-- Label and input for contact_id -->
+      <div class="form-group">
+        <label for="contact_id" class="control-label">
+          <!-- Contact -->
+        </label>
+
+        <input type="hidden" id="contact_id" name="contact_id" placeholder="Contact" class="form-control" value="<%= @interact.contact_id %>">
+      </div>
+
+      <button class="btn btn-primary">
+        Create Interact
+      </button>
+      or
+      <a href="/interacts">Cancel</a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<!-- Validation failure messages -->
+<% if @contact.errors.any? %>
+<% @contact.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit your Contact <%= @contact.cfname %> <%= @contact.clname %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+      </div>
+      <div class="panel-body">
+
+
+        <form action="/update_contact/<%= @contact.id %>" method="post">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+
+
+          <!-- Label and input for cfname -->
+          <div class="form-group">
+            <label for="cfname" class="control-label">
+              First Name
+            </label>
+
+            <input type="text" id="cfname" name="cfname" placeholder="first name" class="form-control" value="<%= @contact.cfname %>">
+          </div>
+
+          <!-- Label and input for clname -->
+          <div class="form-group">
+            <label for="clname" class="control-label">
+              Last Name
+            </label>
+
+            <input type="text" id="clname" name="clname" placeholder="last name" class="form-control" value="<%= @contact.clname %>">
+          </div>
+
+          <!-- Label and input for cemail -->
+          <div class="form-group">
+            <label for="cemail" class="control-label">
+              Email
+            </label>
+
+            <input type="text" id="cemail" name="cemail" placeholder="email" class="form-control" value="<%= @contact.cemail %>">
+          </div>
+
+          <!-- Label and input for cdob -->
+          <div class="form-group">
+            <label for="Date of Birth" class="control-label">
+              Cdob
+            </label>
+
+            <input type="text" id="cdob" name="cdob" placeholder="dob" class="form-control" value="<%= @contact.cdob %>">
+          </div>
+
+          <!-- Label and input for caddress -->
+          <div class="form-group">
+            <label for="caddress" class="control-label">
+              Address
+            </label>
+
+            <input type="text" id="caddress" name="caddress" placeholder="address" class="form-control" value="<%= @contact.caddress %>">
+          </div>
+
+          <!-- Label and input for cphone -->
+          <div class="form-group">
+            <label for="cphone" class="control-label">
+              Phone
+            </label>
+
+            <input type="text" id="cphone" name="cphone" placeholder="phone" class="form-control" value="<%= @contact.cphone %>">
+          </div>
+
+          <!-- Label and input for ccompany -->
+          <div class="form-group">
+            <label for="ccompany" class="control-label">
+              Company
+            </label>
+
+            <input type="text" id="ccompany" name="ccompany" placeholder="company" class="form-control" value="<%= @contact.ccompany %>">
+          </div>
+
+          <!-- Label and input for cindustry -->
+          <div class="form-group">
+            <label for="cindustry" class="control-label">
+              Industry
+            </label>
+
+            <input type="text" id="cindustry" name="cindustry" placeholder="industry" class="form-control" value="<%= @contact.cindustry %>">
+          </div>
+
+          <!-- Label and input for cinterest -->
+          <div class="form-group">
+            <label for="cinterest" class="control-label">
+              Interest
+            </label>
+
+            <input type="text" id="cinterest" name="cinterest" placeholder="interest" class="form-control" value="<%= @contact.cinterest %>">
+          </div>
+
+          <!-- Label and input for crelation -->
+          <div class="form-group">
+            <label for="crelation" class="control-label">
+              Relation
+            </label>
+
+            <input type="text" id="crelation" name="crelation" placeholder="relation" class="form-control" value="<%= @contact.crelation %>">
+          </div>
+
+          <!-- Label and input for cnote -->
+          <div class="form-group">
+            <label for="cnote" class="control-label">
+              Note
+            </label>
+
+            <input type="text" id="cnote" name="cnote" placeholder="note" class="form-control" value="<%= @contact.cnote %>">
+          </div>
+
+          <!-- Label and input for user_id -->
+          <div class="form-group">
+            <!-- <label for="user_id" class="control-label">
+            User
+          </label> -->
+
+          <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @contact.user_id %>">
+        </div>
+
+
+        <button class="btn btn-primary">
+          Update Contact
+        </button>
+        or
+        <a href="/contacts/<%= @contact.id %>">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,40 @@
+
+<div class="page-header">
+  <h1>
+    Interactions
+    <!-- <a href="/interacts/new" class="btn btn-lg btn-primary">New Interaction</a> -->
+  </h1>
+</div>
+<div class="row">
+  <% sorted = @interacts.order("id ASC").reorder("contact_id DESC") %>
+  <% sorted.each do |interact| %>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a href="/contacts/<%= Contact.find(interact.contact_id).id %>">
+          <%= Contact.find(interact.contact_id).clname %>, <%= Contact.find(interact.contact_id).cfname %></h3>
+          </a>
+      </div>
+      <div class="panel-body">
+        <%= interact.ititle %></br>
+        <%= interact.ibody %></br>
+        <%= interact.idate.strftime("%b %d, %Y") %>
+
+        <div class="btn-group navbar-right">
+          <a href="/interacts/<%= interact.id %>/edit" class="btn btn-default btn-sm">
+            <i class="fa fa-edit fa-fw"></i>
+          </a>
+          <a href="/delete_interact/<%= interact.id %>" class="btn btn-default btn-sm" rel="nofollow">
+            <i class="fa fa-trash-o fa-fw"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
+  <% end %>
+</div>

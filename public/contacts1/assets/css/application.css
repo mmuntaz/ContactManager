@@ -1,0 +1,26 @@
+.banner1 {
+  background: url("assets/images/download-hero.jpg") no-repeat center center;
+  background-size: cover;
+  /*color: white;*/
+  height: 500px;
+  padding-top: 150px;
+  vertical-align: middle;
+}
+.intro-header {
+  padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+  padding-bottom: 50px;
+  text-align: center;
+  color: #f8f8f8;
+  background: url(../users/assets/img/intro-bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+.content-section-a {
+  padding: 50px 0;
+  background-color: #f8f8f8;
+}
+
+.content-section-b {
+  padding: 50px 0;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+}

@@ -1,0 +1,174 @@
+<!-- Validation failure messages -->
+<% if @contact.errors.any? %>
+  <% @contact.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3><%= @contact.cfname %> <%= @contact.clname %></h3>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a href="/contacts/<%= @contact.id %>">
+            <%= @contact.clname %>, <%= @contact.cfname %></a>
+            <div class="navbar-right">
+              <%= @contact.interacts.count %> <i class="fa fa-coffee" aria-hidden="true">&nbsp;
+              </i>
+            </div>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>First Name</dt>
+            <dd><%= @contact.cfname %></dd>
+
+            <dt>Last Name</dt>
+            <dd><%= @contact.clname %></dd>
+
+            <dt>Email</dt>
+            <dd><%= @contact.cemail %></dd>
+
+            <dt>Date of Birth</dt>
+            <dd><%= @contact.cdob %></dd>
+
+            <dt>Address</dt>
+            <dd><%= @contact.caddress %></dd>
+
+            <dt>Phone</dt>
+            <dd><%= @contact.cphone %></dd>
+
+            <dt>Company</dt>
+            <dd><%= @contact.ccompany %></dd>
+
+            <dt>Industry</dt>
+            <dd><%= @contact.cindustry %></dd>
+
+            <dt>Interest</dt>
+            <dd><%= @contact.cinterest %></dd>
+
+            <dt>Relation</dt>
+            <dd><%= @contact.crelation %></dd>
+
+            <dt>Note</dt>
+            <dd><%= @contact.cnote %></dd>
+
+          </dl>
+          <div class="btn-group navbar-right">
+            <a href="/contacts/<%= @contact.id %>/edit" class="btn btn-default btn-sm">
+              <i class="fa fa-edit fa-fw"></i>
+            </a>
+            <a href="/delete_contact/<%= @contact.id %>" class="btn btn-default btn-sm" rel="nofollow">
+              <i class="fa fa-trash-o fa-fw"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">New Interaction</h3>
+        </div>
+        <div class="panel-body">
+          <form action="/create_interact" method="post">
+            <!-- Hidden input for authenticity token to protect from forgery -->
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+            <!-- Label and input for ititle -->
+            <div class="form-group">
+              <label for="ititle" class="control-label">
+                Title
+              </label>
+
+              <input type="text" id="ititle" name="ititle" placeholder="title" class="form-control" value="">
+            </div>
+
+            <!-- Label and input for ibody -->
+            <div class="form-group">
+              <label for="ibody" class="control-label">
+                Body
+              </label>
+
+              <input type="text" id="ibody" name="ibody" placeholder="body" class="form-control" value="">
+            </div>
+
+            <!-- Label and input for idate -->
+            <div class="form-group">
+              <label for="idate" class="control-label">
+                Date
+              </label>
+              <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" name="idate" id="idate">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+
+              <!-- <input type="text" id="idate" name="idate" placeholder="date" class="form-control" value=""> -->
+            </div>
+            <!-- Label and input for contact_id -->
+            <div class="form-group">
+              <!-- <label for="contact_id" class="control-label">
+              Contact
+            </label> -->
+
+            <input type="hidden" id="contact_id" name="contact_id" placeholder="Contact" class="form-control" value="<%=  @contact.id %>">
+          </div>
+
+          <button class="btn btn-primary">
+            Create Interaction
+          </button>
+          <!-- or -->
+          <!-- <a href="/interacts">Cancel</a> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <% array = Interact.where({:contact_id => @contact.id}).reorder("idate DESC") %>
+  <div class="col-md-12">
+    <h3>My Interactions with <%= @contact.cfname %></h3>
+  </div>
+  <% array.each do |inter| %>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= inter.idate.strftime("%b %d, %Y") %></h3>
+      </div>
+      <div class="panel-body">
+        <a href="/interacts/<%= inter.id %>">
+        <%= inter.ititle %></br></a>
+        <%= inter.ibody %></br>
+        <div class="btn-group navbar-right">
+          <a href="/interacts/<%= inter.id %>/edit" class="btn btn-default btn-sm">
+            <i class="fa fa-edit fa-fw"></i>
+          </a>
+          <a href="/delete_interact/<%= inter.id %>" class="btn btn-default btn-sm" rel="nofollow">
+            <i class="fa fa-trash-o fa-fw"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+
+
+<script type="text/javascript">
+$(function () {
+  $('#datetimepicker1').datetimepicker();
+});
+</script>
