@@ -17,7 +17,8 @@
           </a>
       </div>
       <div class="panel-body">
-        <%= interact.ititle %></br>
+        <a href="/interacts/<%= interact.id %>">
+        <%= interact.ititle %></br></a>
         <%= interact.ibody %></br>
         <%= interact.idate.strftime("%b %d, %Y") %>
 
